@@ -10,7 +10,10 @@ public class SellOneItemTest {
     @Test
     void productFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display);
+        final Sale sale = new Sale(display, new HashMap<>() {{
+            put("12345", "EUR 12.50");
+            put("23456", "EUR 7.95");
+        }});
 
         sale.onBarcode("12345");
 
@@ -20,7 +23,10 @@ public class SellOneItemTest {
     @Test
     void anotherProductFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display);
+        final Sale sale = new Sale(display, new HashMap<>() {{
+            put("12345", "EUR 12.50");
+            put("23456", "EUR 7.95");
+        }});
 
         sale.onBarcode("23456");
 
@@ -30,7 +36,7 @@ public class SellOneItemTest {
     @Test
     void productNotFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display);
+        final Sale sale = new Sale(display, new HashMap<>());
 
         sale.onBarcode("99999");
 
@@ -40,7 +46,7 @@ public class SellOneItemTest {
     @Test
     void emptyBarcode() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display);
+        final Sale sale = new Sale(display, new HashMap<>());
 
         sale.onBarcode("");
 
@@ -57,14 +63,11 @@ public class SellOneItemTest {
 
     private static class Sale {
         private final Display display;
-        private Map<String, String> pricesByBarcode;
+        private final Map<String, String> pricesByBarcode;
 
-        public Sale(final Display display) {
+        public Sale(final Display display, final Map<String, String> pricesByBarcode) {
             this.display = display;
-            this.pricesByBarcode = new HashMap<>() {{
-                put("12345", "EUR 12.50");
-                put("23456", "EUR 7.95");
-            }};
+            this.pricesByBarcode = pricesByBarcode;
         }
 
         public void onBarcode(final String barcode) {
