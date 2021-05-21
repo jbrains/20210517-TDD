@@ -108,6 +108,5 @@ public class SellOneItemTest {
                 display.displayPrice(price);
             }
         }
-
     }
 }
