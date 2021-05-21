@@ -83,6 +83,10 @@ public class SellOneItemTest {
         public Map<String, String> getPricesByBarcode() {
             return pricesByBarcode;
         }
+
+        private String findPrice(final String barcode) {
+            return getPricesByBarcode().get(barcode);
+        }
     }
 
     private static class Sale {
@@ -100,7 +104,7 @@ public class SellOneItemTest {
                 return;
             }
 
-            final String price = findPrice(barcode);
+            final String price = catalog.findPrice(barcode);
             if (price == null) {
                 display.displayProductNotFoundMessage(barcode);
             }
@@ -109,8 +113,5 @@ public class SellOneItemTest {
             }
         }
 
-        private String findPrice(final String barcode) {
-            return catalog.getPricesByBarcode().get(barcode);
-        }
     }
 }
