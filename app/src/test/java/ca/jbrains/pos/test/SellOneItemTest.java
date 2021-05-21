@@ -80,12 +80,8 @@ public class SellOneItemTest {
             this.pricesByBarcode = pricesByBarcode;
         }
 
-        public Map<String, String> getPricesByBarcode() {
-            return pricesByBarcode;
-        }
-
         private String findPrice(final String barcode) {
-            return getPricesByBarcode().get(barcode);
+            return pricesByBarcode.get(barcode);
         }
     }
 
