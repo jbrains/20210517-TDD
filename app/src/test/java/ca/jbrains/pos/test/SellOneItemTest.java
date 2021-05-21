@@ -46,7 +46,7 @@ public class SellOneItemTest {
     @Test
     void emptyBarcode() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display, new HashMap<>());
+        final Sale sale = new Sale(display, null);
 
         sale.onBarcode("");
 
@@ -76,8 +76,9 @@ public class SellOneItemTest {
                 return;
             }
 
-            if (pricesByBarcode.containsKey(barcode)) {
-                displayPrice(pricesByBarcode.get(barcode));
+            final String price = pricesByBarcode.get(barcode);
+            if (price != null) {
+                displayPrice(price);
             }
             else {
                 displayProductNotFoundMessage(barcode);
