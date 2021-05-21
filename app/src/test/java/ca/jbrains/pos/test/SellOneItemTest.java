@@ -10,10 +10,10 @@ public class SellOneItemTest {
     @Test
     void productFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display, new HashMap<>() {{
+        final Sale sale = new Sale(display, new Catalog(new HashMap<>() {{
             put("12345", "EUR 12.50");
             put("23456", "EUR 7.95");
-        }});
+        }}));
 
         sale.onBarcode("12345");
 
@@ -23,10 +23,10 @@ public class SellOneItemTest {
     @Test
     void anotherProductFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display, new HashMap<>() {{
+        final Sale sale = new Sale(display, new Catalog(new HashMap<>() {{
             put("12345", "EUR 12.50");
             put("23456", "EUR 7.95");
-        }});
+        }}));
 
         sale.onBarcode("23456");
 
@@ -36,7 +36,7 @@ public class SellOneItemTest {
     @Test
     void productNotFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display, new HashMap<>());
+        final Sale sale = new Sale(display, new Catalog(new HashMap<>()));
 
         sale.onBarcode("99999");
 
@@ -46,7 +46,7 @@ public class SellOneItemTest {
     @Test
     void emptyBarcode() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display, null);
+        final Sale sale = new Sale(display, new Catalog(null));
 
         sale.onBarcode("");
 
@@ -73,13 +73,25 @@ public class SellOneItemTest {
         }
     }
 
+    public static class Catalog {
+        private final Map<String, String> pricesByBarcode;
+
+        public Catalog(final Map<String, String> pricesByBarcode) {
+            this.pricesByBarcode = pricesByBarcode;
+        }
+
+        public Map<String, String> getPricesByBarcode() {
+            return pricesByBarcode;
+        }
+    }
+
     private static class Sale {
         private final Display display;
         private final Map<String, String> pricesByBarcode;
 
-        public Sale(final Display display, final Map<String, String> pricesByBarcode) {
+        public Sale(final Display display, final Catalog catalog) {
             this.display = display;
-            this.pricesByBarcode = pricesByBarcode;
+            this.pricesByBarcode = catalog.getPricesByBarcode();
         }
 
         public void onBarcode(final String barcode) {
