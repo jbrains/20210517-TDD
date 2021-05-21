@@ -87,11 +87,11 @@ public class SellOneItemTest {
 
     private static class Sale {
         private final Display display;
-        private final Map<String, String> pricesByBarcode;
+        private final Catalog catalog;
 
         public Sale(final Display display, final Catalog catalog) {
             this.display = display;
-            this.pricesByBarcode = catalog.getPricesByBarcode();
+            this.catalog = catalog;
         }
 
         public void onBarcode(final String barcode) {
@@ -110,7 +110,7 @@ public class SellOneItemTest {
         }
 
         private String findPrice(final String barcode) {
-            return pricesByBarcode.get(barcode);
+            return catalog.getPricesByBarcode().get(barcode);
         }
     }
 }
