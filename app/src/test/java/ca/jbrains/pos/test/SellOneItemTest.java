@@ -77,11 +77,11 @@ public class SellOneItemTest {
             }
 
             final String price = pricesByBarcode.get(barcode);
-            if (price != null) {
-                displayPrice(price);
+            if (price == null) {
+                displayProductNotFoundMessage(barcode);
             }
             else {
-                displayProductNotFoundMessage(barcode);
+                displayPrice(price);
             }
         }
 
